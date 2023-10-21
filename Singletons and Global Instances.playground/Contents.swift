@@ -23,7 +23,7 @@ class MockAPIClient: APIClient {
 //Login Module
 struct LoggedInUser {}
 
-class LoginClientAdapter: UIViewController {
+class LoginClientAdapter {
     
     var login: (((LoggedInUser) -> Void) -> Void)?
 
