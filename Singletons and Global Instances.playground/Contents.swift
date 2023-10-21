@@ -1,10 +1,19 @@
 import UIKit
 
 //API Module
+
 class APIClient {
     static var instance = APIClient()
     
     func rxecute(_ : URLRequest, complition: (Data) -> Void) {}
+}
+
+extension APIClient {
+    func login(complition: (LoggedInUser) -> Void) {}
+}
+
+extension APIClient {
+    func loadFeed(complition: ([FeedItem]) -> Void) {}
 }
 
 class MockAPIClient: APIClient {
@@ -14,16 +23,12 @@ class MockAPIClient: APIClient {
 //Login Module
 struct LoggedInUser {}
 
-extension APIClient {
-    func login(complition: (LoggedInUser) -> Void) {}
-}
+class LoginClientAdapter: UIViewController {
+    
+    var login: (((LoggedInUser) -> Void) -> Void)?
 
-class LoginVC: UIViewController {
-    
-    var api = APIClient.instance
-    
-    func didTapLoginButton() {
-        api.login { user in
+    func loginUser() {
+        login? { user in
                 //show next screen
         }
     }
@@ -33,16 +38,12 @@ class LoginVC: UIViewController {
 
 struct FeedItem {}
 
-extension APIClient {
-    func loadFeed(complition: ([FeedItem]) -> Void) {}
-}
-
-class FeedVC: UIViewController {
+class FeedClientAdapter {
     
-    var api = APIClient.instance
+    var loadFeed: ((([FeedItem]) -> Void) -> Void)?
     
-    func didTapFeedLoadButton() {
-        api.loadFeed { item in
+    func load() {
+        loadFeed? { item in
                 //show next screen
         }
     }
