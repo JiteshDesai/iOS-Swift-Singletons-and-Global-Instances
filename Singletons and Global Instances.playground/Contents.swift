@@ -1,3 +1,9 @@
 import UIKit
 
-var greeting = "Hello, playground"
+final class APIClient {
+    static let instance = APIClient()
+    
+    private init() {}
+}
+
+let client = APIClient.instance
