@@ -3,18 +3,19 @@ import UIKit
 struct LoggedInUser {}
 
 class APIClient {
-    static let instance = APIClient()
-    
-    private init() {}
-    
+    static var instance = APIClient()
+        
     func login(complition: (LoggedInUser) -> Void) {}
 }
 
-let client = APIClient.instance
+//let client = APIClient.instance
 
 class MockAPIClient: APIClient {
-    
+    override init() {}
 }
+
+APIClient.instance = MockAPIClient() // Global Mutating Instance
+
 
 class LoginVC: UIViewController {
     
