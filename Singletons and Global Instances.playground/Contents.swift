@@ -9,11 +9,15 @@ class APIClient {
 }
 
 extension APIClient {
-    func login(complition: (LoggedInUser) -> Void) {}
+    func login(complition: (LoggedInUser) -> Void) {
+        complition(LoggedInUser(name: "test"))
+    }
 }
 
 extension APIClient {
-    func loadFeed(complition: ([FeedItem]) -> Void) {}
+    func loadFeed(complition: ([FeedItem]) -> Void) {
+        complition([FeedItem(name: "One")])
+    }
 }
 
 class MockAPIClient: APIClient {
@@ -21,7 +25,9 @@ class MockAPIClient: APIClient {
 }
 
 //Login Module
-struct LoggedInUser {}
+struct LoggedInUser {
+    let name: String
+}
 
 class LoginClientAdapter {
     
@@ -30,13 +36,16 @@ class LoginClientAdapter {
     func loginUser() {
         login? { user in
                 //show next screen
+            print(user.name)
         }
     }
 }
 
 //Added Feed Module
 
-struct FeedItem {}
+struct FeedItem {
+    let name: String
+}
 
 class FeedClientAdapter {
     
@@ -45,6 +54,15 @@ class FeedClientAdapter {
     func load() {
         loadFeed? { item in
                 //show next screen
+            print(item.first?.name ?? "")
         }
     }
 }
+
+let loginClientAdapter = LoginClientAdapter()
+
+loginClientAdapter.login = { completion in
+    APIClient.instance.login(complition: completion)
+}
+
+loginClientAdapter.loginUser()
